@@ -78,6 +78,8 @@
 #include <FastLED.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
+#include <ESP8266HTTPClient.h>
+#include <ArduinoJson.h>
 #include <WiFiManager.h>
 #include <WiFiUdp.h>
 #include <EEPROM.h>
@@ -97,6 +99,11 @@
 #include "FavoritesManager.h"
 #include "EepromManager.h"
 
+#include "bitmap1.h"
+#include "bitmap2.h"
+#include "bitmap3.h"
+#include "bitmap4.h"
+#include "bitmap5.h"
 
 // --- ИНИЦИАЛИЗАЦИЯ ОБЪЕКТОВ ----------
 CRGB leds[NUM_LEDS];
@@ -108,6 +115,12 @@ WiFiUDP Udp;
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, NTP_ADDRESS, GMT * 3600, NTP_INTERVAL);
 #endif
+
+
+int8_t hrs = 0, mins = 0, secs = 0, aday = 1, amnth = 1;
+int16_t ayear = 1970;
+byte frameNum; 
+
 
 timerMinim timeTimer(3000);
 

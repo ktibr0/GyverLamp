@@ -148,10 +148,10 @@ void drawFrame(uint8_t pcnt)
           - pgm_read_byte(&valueMask[y][newX]);
 
         CRGB color = CHSV(
-          modes[EFF_FIRE].Scale * 2.5 + pgm_read_byte(&hueMask[y][newX]),            // H
-          255,                                                                       // S
-          (uint8_t)max(0, nextv)                                                     // V
-        );
+                       modes[EFF_FIRE].Scale * 2.5 + pgm_read_byte(&hueMask[y][newX]),            // H
+                       255,                                                                       // S
+                       (uint8_t)max(0, nextv)                                                     // V
+                     );
 
         leds[getPixelNumber(x, y)] = color;
       }
@@ -176,10 +176,10 @@ void drawFrame(uint8_t pcnt)
     uint8_t newX = x;
     if (x > 15) newX = x % 16;
     CRGB color = CHSV(
-      modes[EFF_FIRE].Scale * 2.5 + pgm_read_byte(&(hueMask[0][newX])),              // H
-      255,                                                                           // S
-      (uint8_t)(((100.0 - pcnt) * matrixValue[0][newX] + pcnt * line[newX]) / 100.0) // V
-    );
+                   modes[EFF_FIRE].Scale * 2.5 + pgm_read_byte(&(hueMask[0][newX])),              // H
+                   255,                                                                           // S
+                   (uint8_t)(((100.0 - pcnt) * matrixValue[0][newX] + pcnt * line[newX]) / 100.0) // V
+                 );
     //leds[getPixelNumber(newX, 0)] = color;                                         // на форуме пишут что это ошибка - вместо newX должно быть x, иначе
     leds[getPixelNumber(x, 0)] = color;                                              // на матрицах шире 16 столбцов нижний правый угол неработает
   }
@@ -298,23 +298,23 @@ void snowStormRoutine()
     loadingFlag = false;
     FastLED.clear();
   }
-  
+
   // заполняем головами комет левую и верхнюю линию
   for (uint8_t i = HEIGHT / 2; i < HEIGHT; i++)
   {
     if (getPixColorXY(0, i) == 0 &&
-       (random(0, SNOW_DENSE) == 0) &&
+        (random(0, SNOW_DENSE) == 0) &&
         getPixColorXY(0, i + 1) == 0 &&
         getPixColorXY(0, i - 1) == 0)
     {
       leds[getPixelNumber(0, i)] = CHSV(random(0, 200), SNOW_SATURATION, 255);
     }
   }
-  
+
   for (uint8_t i = 0; i < WIDTH / 2; i++)
   {
     if (getPixColorXY(i, HEIGHT - 1) == 0 &&
-       (random(0, map(modes[EFF_SNOWSTORM].Scale, 0, 255, 10, 120)) == 0) &&
+        (random(0, map(modes[EFF_SNOWSTORM].Scale, 0, 255, 10, 120)) == 0) &&
         getPixColorXY(i + 1, HEIGHT - 1) == 0 &&
         getPixColorXY(i - 1, HEIGHT - 1) == 0)
     {
@@ -353,23 +353,23 @@ void starfallRoutine()
     loadingFlag = false;
     FastLED.clear();
   }
-  
+
   // заполняем головами комет левую и верхнюю линию
   for (uint8_t i = HEIGHT / 2; i < HEIGHT; i++)
   {
     if (getPixColorXY(0, i) == 0 &&
-       (random(0, STAR_DENSE) == 0) &&
+        (random(0, STAR_DENSE) == 0) &&
         getPixColorXY(0, i + 1) == 0 &&
         getPixColorXY(0, i - 1) == 0)
     {
       leds[getPixelNumber(0, i)] = CHSV(random(0, 200), STAR_SATURATION, 255);
     }
   }
-  
+
   for (uint8_t i = 0; i < WIDTH / 2; i++)
   {
     if (getPixColorXY(i, HEIGHT - 1) == 0 &&
-       (random(0, map(modes[EFF_STARFALL].Scale, 0, 255, 10, 120)) == 0) &&
+        (random(0, map(modes[EFF_STARFALL].Scale, 0, 255, 10, 120)) == 0) &&
         getPixColorXY(i + 1, HEIGHT - 1) == 0 &&
         getPixColorXY(i - 1, HEIGHT - 1) == 0)
     {
@@ -551,14 +551,14 @@ void lightBallsRoutine()
   // Note that we never actually clear the matrix, we just constantly
   // blur it repeatedly.  Since the blurring is 'lossy', there's
   // an automatic trend toward black -- by design.
-  uint8_t blurAmount = dim8_raw(beatsin8(3,64,100));
+  uint8_t blurAmount = dim8_raw(beatsin8(3, 64, 100));
   blur2d(leds, WIDTH, HEIGHT, blurAmount);
 
   // Use two out-of-sync sine waves
-  uint8_t  i = beatsin8(  91, BorderWidth, WIDTH-BorderWidth);
-  uint8_t  j = beatsin8( 109, BorderWidth, WIDTH-BorderWidth);
-  uint8_t  k = beatsin8(  73, BorderWidth, WIDTH-BorderWidth);
-  uint8_t  m = beatsin8( 123, BorderWidth, WIDTH-BorderWidth);
+  uint8_t  i = beatsin8(  91, BorderWidth, WIDTH - BorderWidth);
+  uint8_t  j = beatsin8( 109, BorderWidth, WIDTH - BorderWidth);
+  uint8_t  k = beatsin8(  73, BorderWidth, WIDTH - BorderWidth);
+  uint8_t  m = beatsin8( 123, BorderWidth, WIDTH - BorderWidth);
 
   // The color of each point shifts over time, each at a different speed.
   uint16_t ms = millis();
@@ -608,7 +608,7 @@ void ballRoutine()
     }
   }
 
-  ballSize = map(modes[EFF_CUBE].Scale, 0, 255, 2, max((int16_t)min(WIDTH,HEIGHT) / 3, 2));
+  ballSize = map(modes[EFF_CUBE].Scale, 0, 255, 2, max((int16_t)min(WIDTH, HEIGHT) / 3, 2));
   for (uint8_t i = 0; i < 2; i++)
   {
     coordB[i] += vectorB[i];
@@ -676,11 +676,11 @@ void whiteColorStripeRoutine()
     for (int16_t y = centerY; y >= 0; y--)
     {
       CRGB color = CHSV(
-        45,                                                                               // определяем тон
-        map(modes[EFF_WHITE_COLOR].Speed, 0, 255, 0, 170),                                // определяем насыщенность
-        y == centerY                                                                                                    // определяем яркость
-          ? 255                                                                                                         // для центральной горизонтальной полосы (или двух) яркость всегда равна 255
-          : (modes[EFF_WHITE_COLOR].Scale / 100.0F) > ((centerY + 1.0F) - (y + 1.0F)) / (centerY + 1.0F) ? 255 : 0);    // для остальных горизонтальных полос яркость равна либо 255, либо 0 в зависимости от масштаба
+                     45,                                                                               // определяем тон
+                     map(modes[EFF_WHITE_COLOR].Speed, 0, 255, 0, 170),                                // определяем насыщенность
+                     y == centerY                                                                                                    // определяем яркость
+                     ? 255                                                                                                         // для центральной горизонтальной полосы (или двух) яркость всегда равна 255
+                     : (modes[EFF_WHITE_COLOR].Scale / 100.0F) > ((centerY + 1.0F) - (y + 1.0F)) / (centerY + 1.0F) ? 255 : 0);    // для остальных горизонтальных полос яркость равна либо 255, либо 0 в зависимости от масштаба
 
       for (uint8_t x = 0; x < WIDTH; x++)
       {
@@ -692,9 +692,9 @@ void whiteColorStripeRoutine()
 }
 
 /*
- * устарело
-void lightersRoutine()
-{
+   устарело
+  void lightersRoutine()
+  {
   if (loadingFlag)
   {
     loadingFlag = false;
@@ -753,5 +753,5 @@ void lightersRoutine()
 
     drawPixelXY(lightersPos[0][i] / 10, lightersPos[1][i] / 10, lightersColor[i]);
   }
-}
+  }
 */

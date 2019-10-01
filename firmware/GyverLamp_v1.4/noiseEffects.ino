@@ -83,7 +83,13 @@ void rainbowStripeNoiseRoutine()
 void zebraNoiseRoutine()
 {
   if (loadingFlag)
+ 
+  
   {
+    
+     
+
+     
     loadingFlag = false;
     // 'black out' all 16 palette entries...
     fill_solid( currentPalette, 16, CRGB::Black);
@@ -95,8 +101,10 @@ void zebraNoiseRoutine()
     scale = modes[EFF_ZEBRA].Scale;
     speed = modes[EFF_ZEBRA].Speed;
     colorLoop = 1;
+    
   }
-  fillNoiseLED();
+  //fillNoiseLED();
+  
 }
 
 void forestNoiseRoutine()
